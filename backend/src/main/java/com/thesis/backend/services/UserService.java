@@ -1,6 +1,7 @@
 package com.thesis.backend.services;
 
 import com.thesis.backend.model.db.User;
+import com.thesis.backend.model.dto.UserLoginDto;
 import com.thesis.backend.model.dto.UserRegistrationDto;
 import com.thesis.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,17 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
 
         userRepository.save(user);
+    }
+
+    public User login(UserLoginDto dto) {
+        User user = userRepository.findByUserName(dto.getUserName())
+                .orElseThrow(() -> new RuntimeException("User not found!"));
+
+        if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
+            throw new RuntimeException("Invalid password!");
+        }
+
+        return user;
     }
 
     @Override
