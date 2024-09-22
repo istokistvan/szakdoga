@@ -1,14 +1,14 @@
 package com.thesis.backend.repositories;
 
-import com.thesis.backend.model.db.User;
+import com.thesis.backend.models.db.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public interface UserRepository extends JpaRepository<User, UUID> {
+public interface UserRepository extends JpaRepository<UserEntity, UUID> {
 
-    Optional<User> findByUserName(String userName);
+    Optional<UserEntity> findByUsername(String userName);
 
-    Optional<User> findByEmail(String email);
+    Optional<UserEntity> findByEmail(String email);
 }

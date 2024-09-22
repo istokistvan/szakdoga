@@ -1,61 +1,61 @@
 package com.thesis.backend.services;
 
-import com.thesis.backend.model.db.User;
-import com.thesis.backend.model.dto.UserLoginDto;
-import com.thesis.backend.model.dto.UserRegistrationDto;
+import com.thesis.backend.exceptions.ExistingEmailException;
+import com.thesis.backend.exceptions.ExistingUsernameException;
+import com.thesis.backend.exceptions.InvalidPasswordException;
+import com.thesis.backend.models.converters.UserDtoConverter;
+import com.thesis.backend.models.db.UserEntity;
+import com.thesis.backend.models.dto.UserLoginDto;
+import com.thesis.backend.models.dto.UserRegistrationDto;
 import com.thesis.backend.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class UserService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public void register(UserRegistrationDto dto) {
-        if (userRepository.findByUserName(dto.getUserName()).isPresent()) {
-            throw new RuntimeException("Username already exists!");
-        }
-
-        if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
-            throw new RuntimeException("Email already exists!");
-        }
-
-        User user = new User();
-        user.setFullName(dto.getFullName());
-        user.setUserName(dto.getUserName());
-        user.setEmail(dto.getEmail());
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
-
-        userRepository.save(user);
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
-    public User login(UserLoginDto dto) {
-        User user = userRepository.findByUserName(dto.getUserName())
-                .orElseThrow(() -> new RuntimeException("User not found!"));
+    public void register(UserRegistrationDto dto) {
+        userRepository.findByUsername(dto.getUserName()).ifPresent(user -> {
+            throw new ExistingUsernameException("Username already exists!");
+        });
 
-        if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid password!");
+        userRepository.findByEmail(dto.getEmail()).ifPresent(user -> {
+            throw new ExistingEmailException("Email already exists!");
+        });
+
+        userRepository.save(UserDtoConverter.convertToEntity(dto, passwordEncoder));
+    }
+
+    public UserEntity login(UserLoginDto dto) {
+        UserEntity userEntity = userRepository.findByUsername(dto.getUserName())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found!"));
+
+        if (!passwordEncoder.matches(dto.getPassword(), userEntity.getPassword())) {
+            throw new InvalidPasswordException("Invalid password!");
         }
 
-        return user;
+        return userEntity;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUserName(username)
+    public UserDetails loadUserByUsername(String username) {
+        UserEntity userEntity = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getUserName())
-                .password(user.getPassword())
-                .build();
+        return User.withUsername(userEntity.getUsername()).password(userEntity.getPassword()).build();
     }
 }
