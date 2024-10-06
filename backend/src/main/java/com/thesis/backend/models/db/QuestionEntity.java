@@ -31,6 +31,9 @@ public class QuestionEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<AnswerEntity> answers;
 
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    private List<UserAnswerEntity> userAnswerEntities;
+
     private int points;
 
     private String correctAnswer;

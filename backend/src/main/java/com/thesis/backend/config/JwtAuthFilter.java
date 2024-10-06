@@ -1,5 +1,6 @@
 package com.thesis.backend.config;
 
+import com.thesis.backend.services.UserService;
 import com.thesis.backend.utils.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -27,7 +28,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
 
-    public JwtAuthFilter(HandlerExceptionResolver handlerExceptionResolver, JwtUtil jwtUtil, UserDetailsService userDetailsService) {
+    public JwtAuthFilter(HandlerExceptionResolver handlerExceptionResolver, JwtUtil jwtUtil, UserService userDetailsService) {
         this.handlerExceptionResolver = handlerExceptionResolver;
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -20,6 +21,9 @@ public class AnswerEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "question_id", nullable = false)
     private QuestionEntity question;
+
+    @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL)
+    private List<UserAnswerEntity> userAnswerEntities;
 
     private String answer;
 

@@ -22,7 +22,6 @@ public class QuizController {
 
     @PostMapping("/create")
     public ResponseEntity<String> createQuiz(@RequestBody @Validated QuizDto dto) {
-        System.out.println(dto);
         try {
             quizService.createQuiz(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body("Quiz created successfully!");

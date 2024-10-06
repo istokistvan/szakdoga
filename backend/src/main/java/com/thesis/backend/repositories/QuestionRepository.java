@@ -1,7 +1,6 @@
 package com.thesis.backend.repositories;
 
-import com.thesis.backend.models.db.QuizEntity;
-import lombok.NonNull;
+import com.thesis.backend.models.db.QuestionEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +8,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface StudyRepository extends CrudRepository<QuizEntity, UUID> {
+public interface QuestionRepository extends CrudRepository<QuestionEntity, UUID> {
 
-    Optional<QuizEntity> findQuizById(@NonNull UUID id);
+    Optional<QuestionEntity> findById(UUID id);
+
 }

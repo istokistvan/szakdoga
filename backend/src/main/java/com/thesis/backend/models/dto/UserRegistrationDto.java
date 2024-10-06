@@ -4,11 +4,9 @@ import com.thesis.backend.annotations.ValidEmail;
 import com.thesis.backend.annotations.ValidFullname;
 import com.thesis.backend.annotations.ValidPassword;
 import com.thesis.backend.annotations.ValidUsername;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class UserRegistrationDto {
 
     @ValidFullname
