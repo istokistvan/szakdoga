@@ -1,8 +1,8 @@
 "use client"
 
-import {Button, Input} from "@nextui-org/react";
-import {handleLogin} from "@/app/api/auth/login";
+import {Button, Input, Link} from "@nextui-org/react";
 import {useRouter} from "next/navigation";
+import {handleLogin} from "@/app/api/auth/login";
 
 export default function LoginPage() {
 
@@ -44,6 +44,7 @@ export default function LoginPage() {
                     variant="underlined"
                 />
 
+                <Link href="/auth/register">Don&apos;t have an account? Register</Link>
                 <Button type="submit" color="success">Login</Button>
             </form>
         </div>

@@ -23,7 +23,7 @@ export default function Navbar() {
     return (
         <Nav
             onMenuOpenChange={setIsOpen}
-            position="static"
+            position="sticky"
             className="w-full shadow-xl my-3 rounded-2xl lg:w-3/4 border-x-1 border-b-1 border-color-[#e2e2e2]"
         >
             <NavbarContent
@@ -44,13 +44,12 @@ export default function Navbar() {
                 className="hidden w-full sm:flex" justify="center"
             >
 
-                {menuItems.map((item, index) => {
-                    return (
+                {menuItems.map((item, index) => (
                         <NavbarItem key={index}>
                             <Link href={item.href} className={item.classNames}>{item.display}</Link>
                         </NavbarItem>
                     )
-                })}
+                )}
             </NavbarContent>
 
             <NavbarMenu

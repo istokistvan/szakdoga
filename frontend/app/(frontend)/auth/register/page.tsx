@@ -1,7 +1,7 @@
 "use client"
 
 import {useRouter} from "next/navigation";
-import {Button, Input} from "@nextui-org/react";
+import {Button, Input, Link} from "@nextui-org/react";
 import {handleRegister} from "@/app/api/auth/register";
 
 export default function RegisterPage() {
@@ -9,7 +9,7 @@ export default function RegisterPage() {
     const router = useRouter()
 
     const handleSubmit = async (formData: FormData) => {
-        await handleRegister(formData).then(() => {
+        handleRegister(formData).then(() => {
             router.replace("/auth/login")
         })
     }
@@ -58,6 +58,7 @@ export default function RegisterPage() {
                     variant="underlined"
                 />
 
+                <Link href={"/auth/login"}>Already have an account? Login</Link>
                 <Button
                     type="submit"
                     color="success"

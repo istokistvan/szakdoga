@@ -1,12 +1,12 @@
 import {ReactNode} from "react";
 import Navbar from "@/app/ui/Navbar/Navbar";
-import QuizCreateButton from "@/app/ui/QuizCreateButton";
+import QuizCreateButton from "@/app/ui/QuizCreation/QuizCreateButton";
 import {Link} from "@nextui-org/react";
 
 export default function AppLayout({children}: { children: ReactNode }) {
     return (
         <div
-            className="w-screen h-screen px-3"
+            className="w-screen h-screen px-3 overflow-x-hidden"
         >
             <div
                 className="w-full flex justify-center"
