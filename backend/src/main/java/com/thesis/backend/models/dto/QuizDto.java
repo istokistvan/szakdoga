@@ -4,10 +4,14 @@ import com.thesis.backend.annotations.ValidDate;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class QuizDto {
 
     @NonNull
@@ -16,6 +20,8 @@ public class QuizDto {
 
     @NonNull
     private Boolean isVisible;
+
+    private String password;
 
     private String description;
 
@@ -26,5 +32,5 @@ public class QuizDto {
     private String availableTo;
 
     @NonNull
-    private QuestionDto[] questions;
+    private List<QuestionDto> questions;
 }

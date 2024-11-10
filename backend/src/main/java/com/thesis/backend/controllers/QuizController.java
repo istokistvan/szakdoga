@@ -4,7 +4,6 @@ import com.thesis.backend.models.dto.QuizDto;
 import com.thesis.backend.services.QuizService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +20,7 @@ public class QuizController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createQuiz(@RequestBody @Validated QuizDto dto) {
+    public ResponseEntity<String> createQuiz(@RequestBody QuizDto dto) {
         try {
             quizService.createQuiz(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body("Quiz created successfully!");

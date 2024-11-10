@@ -1,6 +1,6 @@
 "use client"
 
-import {Button, Input, Select, SelectItem} from "@nextui-org/react";
+import {Button, Input, Select, SelectItem, Switch} from "@nextui-org/react";
 import {Question, questionTypes} from "@/app/lib/definitions";
 import {Dispatch, SetStateAction, useState} from "react";
 import AnswerForm from "@/app/ui/QuizCreation/AnswerForm";
@@ -11,15 +11,17 @@ export default function QuestionForm(props: { setQuestions: Dispatch<SetStateAct
         question: "",
         questionType: "TRUE_FALSE",
         points: 1,
+        isNegated: false,
         answers: []
     })
 
     const handleSaveQuestion = () => {
-        props.setQuestions((prevState) => ({...prevState, ...state}))
+        props.setQuestions((prevState) => ([...prevState, state]))
         setState({
             question: "",
             questionType: "TRUE_FALSE",
             points: 1,
+            isNegated: false,
             answers: []
         })
     }
@@ -66,6 +68,18 @@ export default function QuestionForm(props: { setQuestions: Dispatch<SetStateAct
                 })
                 }
             </Select>
+
+            {state.questionType === 'TRUE_FALSE' &&
+                <Switch
+                    name="isNegated"
+                    color="success"
+
+                    isSelected={state.isNegated}
+
+                    onChange={() => setState((prevState) => ({...prevState, isNegated: !prevState.isNegated}))}
+                >
+                    Negated question?
+                </Switch>}
 
             <AnswerForm type={state.questionType} setItems={setState}/>
             <Button onClick={handleSaveQuestion}>Save question</Button>

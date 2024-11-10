@@ -13,6 +13,6 @@ public interface QuizRepository extends CrudRepository<QuizEntity, UUID> {
 
     Optional<QuizEntity> findByName(@NonNull String name);
 
+    @NonNull
     Optional<QuizEntity> findById(@NonNull UUID uuid);
-
 }

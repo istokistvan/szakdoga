@@ -6,9 +6,9 @@ import {RiEyeCloseLine, RiEyeLine} from "react-icons/ri"
 import {getLocalTimeZone, now} from "@internationalized/date";
 import QuestionForm from "@/app/ui/QuizCreation/QuestionForm";
 import {Question, Quiz} from "@/app/lib/definitions";
-import createQuiz from "@/app/api/quiz/create/create";
 import {DateTime} from "luxon";
 import {useRouter} from "next/navigation";
+import createQuiz from "@/app/api/quiz/create/create";
 
 export default function QuizCreation() {
 
@@ -17,14 +17,15 @@ export default function QuizCreation() {
     const [isSelected, setIsSelected] = useState(true)
     const [state, setState] = useState<Question[]>([])
 
-    const handleSubmit = async (formData: FormData) => {
+    const handleSubmit = (formData: FormData) => {
         const quizData: Quiz = {
             name: formData.get('name') as string,
             isVisible: formData.get('isVisible') === '',
+            password: formData.get('password') as string,
             description: formData.get('description') as string,
             availableFrom: DateTime.fromISO(formData.get('availableFrom') as string).toFormat('yyyy.MM.dd HH:mm'),
             availableTo: DateTime.fromISO(formData.get('availableTo') as string).toFormat('yyyy.MM.dd HH:mm'),
-            questions: [{...state}]
+            questions: state
         }
 
         createQuiz(quizData)
@@ -69,6 +70,13 @@ export default function QuizCreation() {
                         >
                             {isSelected ? "Public" : "Private"} quiz
                         </Switch>
+
+                        <Input
+                            name="password"
+                            label="Password (optional)"
+
+                            variant="underlined"
+                        />
                     </div>
 
                     <Textarea
@@ -89,6 +97,7 @@ export default function QuizCreation() {
                             name="availableTo"
                             label="Available to"
                             granularity="minute"
+                            defaultValue={now(getLocalTimeZone()).add({days: 7})}
                             isRequired
                         />
                     </div>

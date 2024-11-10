@@ -67,8 +67,7 @@ export default function AnswerForm(props: {
                                             )
                                         }
                                     }
-                                >
-                                </Switch>
+                                />
                             </div>
                         ))}
                         <Button

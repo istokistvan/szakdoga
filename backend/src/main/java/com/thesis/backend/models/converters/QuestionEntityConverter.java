@@ -13,7 +13,7 @@ public class QuestionEntityConverter {
                         question.getQuestion(),
                         question.getQuestionType(),
                         question.getPoints(),
-                        AnswerEntityConverter.convertToDtoList(question.getAnswers())
+                        List.of(AnswerEntityConverter.convertToDtoList(question.getAnswers()))
                 ))
                 .toArray(QuestionDto[]::new);
     }

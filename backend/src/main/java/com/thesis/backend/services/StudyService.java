@@ -1,10 +1,12 @@
 package com.thesis.backend.services;
 
 import com.thesis.backend.models.converters.QuizEntityConverter;
-import com.thesis.backend.models.dto.QuizDto;
+import com.thesis.backend.models.dto.StudyDto;
 import com.thesis.backend.repositories.StudyRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -16,7 +18,11 @@ public class StudyService {
         this.studyRepository = studyRepository;
     }
 
-    public QuizDto studyQuiz(UUID id) {
-        return QuizEntityConverter.convertToDto(studyRepository.findQuizById(id));
+    public List<StudyDto> studyAll() {
+        return QuizEntityConverter.convertToStudyDtoList(studyRepository.findAllAvailable(LocalDateTime.now()));
+    }
+
+    public StudyDto studyQuiz(UUID id) {
+        return QuizEntityConverter.convertToStudyDto(studyRepository.findQuizById(id).orElseThrow());
     }
 }

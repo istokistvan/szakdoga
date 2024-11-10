@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NonNull;
 
+import java.util.List;
+
 @Data
 public class QuestionDto {
 
@@ -21,5 +23,7 @@ public class QuestionDto {
     private String correctAnswer;
 
     @NonNull
-    private AnswerDto[] answers;
+    private List<AnswerDto> answers;
+
+    private Boolean isNegated;
 }

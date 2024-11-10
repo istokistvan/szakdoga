@@ -29,14 +29,23 @@ export type Question = {
     question: string;
     questionType: string;
     points: number;
+    isNegated: boolean;
     answers: Answer[];
 };
 
 export type Quiz = {
     name: string,
     isVisible: boolean,
+    password: string,
     description: string,
     availableFrom: string,
     availableTo: string,
+    questions: Question[]
+}
+
+export type Study = {
+    id: string,
+    name: string,
+    description: string,
     questions: Question[]
 }
