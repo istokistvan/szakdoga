@@ -9,7 +9,5 @@ public class QuizResultDto {
 
     private UUID quizId;
 
-    private UUID examiner;
-
     private UserAnswerDto[] userAnswers;
 }

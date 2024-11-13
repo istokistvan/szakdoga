@@ -2,10 +2,10 @@ package com.thesis.backend.models.converters;
 
 import com.thesis.backend.models.db.QuizEntity;
 import com.thesis.backend.models.dto.QuizDto;
+import com.thesis.backend.models.dto.QuizExamineDto;
 import com.thesis.backend.models.dto.StudyDto;
 import lombok.NonNull;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +19,7 @@ public class QuizEntityConverter {
                         quizEntity.getDescription(),
                         quizEntity.getAvailableFrom().toString(),
                         quizEntity.getAvailableTo().toString(),
-                        List.of(QuestionEntityConverter.convertToDtoList(quizEntity.getQuestions()))
+                        QuestionEntityConverter.convertToDtoList(quizEntity.getQuestions())
                 ))
                 .orElse(null);
     }
@@ -33,11 +33,25 @@ public class QuizEntityConverter {
                 quiz.getId(),
                 quiz.getName(),
                 quiz.getDescription(),
-                Arrays.stream(QuestionEntityConverter.convertToDtoList(quiz.getQuestions())).toList()
+                QuestionEntityConverter.convertToDtoList(quiz.getQuestions())
+        );
+    }
+
+    public static QuizExamineDto convertToExamineDto(QuizEntity quiz) {
+        return new QuizExamineDto(
+                quiz.getId(),
+                quiz.getName(),
+                quiz.getPassword(),
+                quiz.getDescription(),
+                QuestionEntityConverter.convertToExamineDtoList(quiz.getQuestions())
         );
     }
 
     public static List<StudyDto> convertToStudyDtoList(@NonNull List<QuizEntity> all) {
         return all.stream().map(QuizEntityConverter::convertToStudyDto).toList();
+    }
+
+    public static List<QuizExamineDto> convertToExamineDtoList(@NonNull List<QuizEntity> all) {
+        return all.stream().map(QuizEntityConverter::convertToExamineDto).toList();
     }
 }

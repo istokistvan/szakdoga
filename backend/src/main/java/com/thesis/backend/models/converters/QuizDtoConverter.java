@@ -18,6 +18,7 @@ public class QuizDtoConverter {
         QuizEntity result = new QuizEntity(
                 dto.getName(),
                 dto.getIsVisible(),
+                dto.getPassword(),
                 dto.getDescription(),
                 LocalDateTime.parse(dto.getAvailableFrom(), DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm")),
                 LocalDateTime.parse(dto.getAvailableTo(), DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"))

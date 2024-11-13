@@ -24,7 +24,7 @@ public class StudyController {
     @GetMapping("/all")
     public ResponseEntity<List<StudyDto>> studyAll() {
         try {
-            return ResponseEntity.ok(studyService.studyAll());
+            return ResponseEntity.ok(studyService.getAll());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(null);
         }

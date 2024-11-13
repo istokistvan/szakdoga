@@ -23,7 +23,6 @@ export default function Navbar() {
     return (
         <Nav
             onMenuOpenChange={setIsOpen}
-            position="sticky"
             className="w-full shadow-xl my-3 rounded-2xl lg:w-3/4 border-x-1 border-b-1 border-color-[#e2e2e2]"
         >
             <NavbarContent

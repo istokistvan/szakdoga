@@ -18,7 +18,7 @@ public class StudyService {
         this.studyRepository = studyRepository;
     }
 
-    public List<StudyDto> studyAll() {
+    public List<StudyDto> getAll() {
         return QuizEntityConverter.convertToStudyDtoList(studyRepository.findAllAvailable(LocalDateTime.now()));
     }
 

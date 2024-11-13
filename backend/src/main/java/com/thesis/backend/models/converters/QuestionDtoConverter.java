@@ -21,7 +21,7 @@ public class QuestionDtoConverter {
             question.setQuestion(questionDto.getQuestion());
             question.setQuestionType(questionDto.getQuestionType());
             question.setPoints(questionDto.getPoints());
-            question.setCorrectAnswer(questionDto.getCorrectAnswer());
+            question.setCorrectAnswers(questionDto.getCorrectAnswer());
             if (questionDto.getQuestionType().toString().equals("TRUE_FALSE")) {
                 question.setAnswers(AnswerDtoConverter.convertToEntityList(
                         List.of(new AnswerDto("True", !questionDto.getIsNegated(), 0), new AnswerDto("False", questionDto.getIsNegated(), 0)), question)

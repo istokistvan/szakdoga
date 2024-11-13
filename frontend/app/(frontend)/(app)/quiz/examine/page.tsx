@@ -1,21 +1,20 @@
 "use client"
 
 import {useCallback, useEffect, useState} from "react";
-import {allQuizzes} from "@/app/api/quiz/learn/learn";
+import {getAllQuiz} from "@/app/api/quiz/examine/examine";
+import type {Examine} from "@/app/lib/definitions";
 import {Button, Card, CardBody, CardFooter, CardHeader, Divider, Link} from "@nextui-org/react";
-import {Study} from "@/app/lib/definitions";
 
-export default function Learn() {
+export default function Examine() {
 
-    const [state, setState] = useState([])
+    const [state, setState] = useState<Examine[]>([])
 
     useEffect(() => {
-        allQuizzes()
-            .then(r => setState(r))
+        getAllQuiz().then(res => setState(res))
     }, []);
 
     const renderQuizzes = useCallback(() => {
-        return state.map((quiz: Study, index) => (
+        return state.map((quiz, index) => (
             <Card key={index} className="w-fit min-w-[400px] h-fit">
                 <CardHeader
                     className="flex justify-center text-xl font-bold"
@@ -34,28 +33,18 @@ export default function Learn() {
 
                 <CardFooter className="flex justify-around">
                     <Link
-                        href={`/quiz/learn/continuous/${quiz.id}`}
+                        href={`/quiz/examine/${quiz.id}`}
                     >
                         <Button
-                            color="warning"
+                            color="danger"
                         >
-                            Continuous
-                        </Button>
-                    </Link>
-
-                    <Link
-                        href={`/quiz/learn/flipcard/${quiz.id}`}
-                    >
-                        <Button
-                            color="success"
-                        >
-                            Flip cards
+                            Take Exam
                         </Button>
                     </Link>
                 </CardFooter>
             </Card>
         ))
-    }, [state]);
+    }, [state])
 
     return (
         <div className="w-full h-fit flex flex-wrap gap-5 justify-between">

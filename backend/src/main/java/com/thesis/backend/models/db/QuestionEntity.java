@@ -36,14 +36,14 @@ public class QuestionEntity {
 
     private int points;
 
-    private String correctAnswer;
+    private String correctAnswers;
 
-    public QuestionEntity(QuizEntity quiz, String question, QuestionType questionType, List<AnswerEntity> answers, int points, String correctAnswer) {
+    public QuestionEntity(QuizEntity quiz, String question, QuestionType questionType, List<AnswerEntity> answers, int points, String correctAnswers) {
         this.quiz = quiz;
         this.question = question;
         this.questionType = questionType;
         this.answers = answers;
         this.points = points;
-        this.correctAnswer = correctAnswer;
+        this.correctAnswers = correctAnswers;
     }
 }

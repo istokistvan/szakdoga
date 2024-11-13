@@ -4,11 +4,14 @@ import com.thesis.backend.models.db.*;
 import com.thesis.backend.models.dto.QuizResultDto;
 import com.thesis.backend.models.dto.UserAnswerDto;
 import com.thesis.backend.repositories.*;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class QuizResultService {
@@ -30,7 +33,9 @@ public class QuizResultService {
     public float submitQuizResult(QuizResultDto quizResultDto) {
 
         Optional<QuizEntity> quiz = quizRepository.findById(quizResultDto.getQuizId());
-        Optional<UserEntity> user = userRepository.findById(quizResultDto.getExaminer());
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<UserEntity> user = userRepository.findByUsername(userDetails.getUsername());
 
         List<UserAnswerEntity> userAnswers = new ArrayList<>();
 
@@ -39,18 +44,48 @@ public class QuizResultService {
         for (UserAnswerDto dto : quizResultDto.getUserAnswers()) {
 
             Optional<QuestionEntity> question = questionRepository.findById(dto.getQuestionId());
-            Optional<AnswerEntity> answer = answerRepository.findById(dto.getAnswerId());
+            Optional<AnswerEntity> userAnswer;
 
-            if (question.isPresent() && answer.isPresent()) {
-                userAnswers.add(
-                        new UserAnswerEntity(
+            if (question.isPresent()) {
+                switch (question.get().getQuestionType()) {
+                    case NUMBER:
+                        userAnswer = Optional.of(question.get().getAnswers().get(0));
+                        float answer = Float.parseFloat(question.get().getAnswers().get(0).getAnswer());
+                        int errorTolerance = question.get().getAnswers().get(0).getErrorTolerance();
+                        if (answer - errorTolerance <= Float.parseFloat(dto.getAnswer()) && Float.parseFloat(dto.getAnswer()) <= answer + errorTolerance) {
+                            score += question.get().getPoints();
+                        }
+
+                        userAnswers.add(new UserAnswerEntity(
                                 question.get(),
-                                answer.get()
-                        )
-                );
+                                userAnswer.get()
+                        ));
 
-                if (answer.get().isCorrect()) {
-                    score += question.get().getPoints();
+                        break;
+                    case TEXT:
+                        //TODO: Implement text comparison
+                        break;
+                    case MULTIPLE_CHOICE:
+                        float oneCorrect = (float) (question.get().getPoints() * 1.0 / question.get().getAnswers().stream().filter(AnswerEntity::isCorrect).count());
+                        userAnswer = answerRepository.findById(UUID.fromString(dto.getAnswer()));
+                        if (userAnswer.isPresent() && userAnswer.get().isCorrect()) {
+                            score += oneCorrect;
+                        }
+                        userAnswer.ifPresent(answerEntity -> userAnswers.add(new UserAnswerEntity(
+                                question.get(),
+                                answerEntity
+                        )));
+
+                        break;
+                    default:
+                        userAnswer = answerRepository.findById(UUID.fromString(dto.getAnswer()));
+                        if (userAnswer.isPresent() && userAnswer.get().isCorrect()) {
+                            score += question.get().getPoints();
+                        }
+                        userAnswer.ifPresent(answerEntity -> userAnswers.add(new UserAnswerEntity(
+                                question.get(),
+                                answerEntity
+                        )));
                 }
             }
         }

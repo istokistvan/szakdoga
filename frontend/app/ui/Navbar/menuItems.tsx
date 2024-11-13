@@ -16,5 +16,10 @@ export const menuItems: MenuItem[] = [
         display: "Learn",
         href: "/quiz/learn",
         classNames: "text-[1.2em] text-yellow-400"
+    },
+    {
+        display: "Examine",
+        href: "/quiz/examine",
+        classNames: "text-[1.2em] text-yellow-400"
     }
 ]

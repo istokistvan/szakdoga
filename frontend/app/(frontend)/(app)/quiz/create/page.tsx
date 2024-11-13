@@ -74,6 +74,7 @@ export default function QuizCreation() {
                         <Input
                             name="password"
                             label="Password (optional)"
+                            type="password"
 
                             variant="underlined"
                         />

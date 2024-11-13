@@ -23,7 +23,7 @@ public class QuizResultController {
         try {
             float score = quizResultService.submitQuizResult(quizResultDto);
 
-            return ResponseEntity.ok(score + "");
+            return ResponseEntity.ok("You have " + score + " points!");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Failed to submit quiz result!");
         }

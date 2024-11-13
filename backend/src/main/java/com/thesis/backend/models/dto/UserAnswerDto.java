@@ -9,5 +9,5 @@ public class UserAnswerDto {
 
     private UUID questionId;
 
-    private UUID answerId;
+    private String answer;
 }

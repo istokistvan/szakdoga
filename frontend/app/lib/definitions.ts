@@ -20,16 +20,18 @@ export const questionTypes = [
 ]
 
 export type Answer = {
+    id?: string;
     answer: string;
     isCorrect: boolean;
     errorTolerance: number;
 };
 
 export type Question = {
+    id?: string;
     question: string;
     questionType: string;
     points: number;
-    isNegated: boolean;
+    isNegated?: boolean;
     answers: Answer[];
 };
 
@@ -48,4 +50,22 @@ export type Study = {
     name: string,
     description: string,
     questions: Question[]
+}
+
+export type Examine = {
+    id: string,
+    name: string,
+    password: string,
+    description: string,
+    questions: Question[]
+}
+
+export type UserAnswer = {
+    questionId: string,
+    answer: string
+}
+
+export type QuizResult = {
+    quizId: string,
+    userAnswers: UserAnswer[]
 }
