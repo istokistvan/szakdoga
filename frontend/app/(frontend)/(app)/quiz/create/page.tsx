@@ -1,14 +1,14 @@
 "use client"
 
 import {Button, DatePicker, Input, Switch, Textarea} from "@nextui-org/react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {RiEyeCloseLine, RiEyeLine} from "react-icons/ri"
-import {getLocalTimeZone, now} from "@internationalized/date";
 import QuestionForm from "@/app/ui/QuizCreation/QuestionForm";
 import {Question, Quiz} from "@/app/lib/definitions";
 import {DateTime} from "luxon";
 import {useRouter} from "next/navigation";
 import createQuiz from "@/app/api/quiz/create/create";
+import {DateValue, getLocalTimeZone, now} from "@internationalized/date";
 
 export default function QuizCreation() {
 
@@ -16,6 +16,8 @@ export default function QuizCreation() {
 
     const [isSelected, setIsSelected] = useState(true)
     const [state, setState] = useState<Question[]>([])
+
+    const [date, setDate] = useState<DateValue>()
 
     const handleSubmit = (formData: FormData) => {
         const quizData: Quiz = {
@@ -31,6 +33,10 @@ export default function QuizCreation() {
         createQuiz(quizData)
             .then(() => router.replace('/dashboard'))
     }
+
+    useEffect(() => {
+        setDate(now(getLocalTimeZone()))
+    }, []);
 
     return (
         <div>
@@ -85,23 +91,25 @@ export default function QuizCreation() {
                         label="Description (optional)"
                     />
 
-                    <div className="flex gap-5">
-                        <DatePicker
-                            name="availableFrom"
-                            label="Available from"
-                            granularity="minute"
-                            defaultValue={now(getLocalTimeZone())}
-                            isRequired
-                        />
+                    {date &&
+                        <div className="flex gap-5">
+                            <DatePicker
+                                name="availableFrom"
+                                label="Available from"
+                                granularity="minute"
+                                defaultValue={date}
+                                isRequired
+                            />
 
-                        <DatePicker
-                            name="availableTo"
-                            label="Available to"
-                            granularity="minute"
-                            defaultValue={now(getLocalTimeZone()).add({days: 7})}
-                            isRequired
-                        />
-                    </div>
+                            <DatePicker
+                                name="availableTo"
+                                label="Available to"
+                                granularity="minute"
+                                defaultValue={date?.add({days: 7})}
+                                isRequired
+                            />
+                        </div>
+                    }
                     <Button type="submit" color="success">Create quiz</Button>
                 </div>
 

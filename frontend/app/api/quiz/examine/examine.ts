@@ -6,6 +6,7 @@ import {cookies} from "next/headers";
 export async function getAllQuiz() {
     return fetch("http://backend:8080/api/examine/all", {
         method: "GET",
+        cache: "no-store",
         headers: {
             'Authorization': `Bearer ${cookies().get(AUTHORIZATION)?.value}`
         }
@@ -17,6 +18,7 @@ export async function getAllQuiz() {
 export async function getQuizById(id: string) {
     return fetch(`http://backend:8080/api/examine/${id}`, {
         method: "GET",
+        cache: "no-store",
         headers: {
             'Authorization': `Bearer ${cookies().get(AUTHORIZATION)?.value}`
         }

@@ -1,3 +1,5 @@
+"use client"
+
 import {Button, Input, Switch} from "@nextui-org/react";
 import {Answer, Question} from "@/app/lib/definitions";
 import {Dispatch, SetStateAction, useEffect, useState} from "react";

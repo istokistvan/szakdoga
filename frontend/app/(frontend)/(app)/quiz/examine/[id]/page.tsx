@@ -4,7 +4,7 @@ import {useParams, useRouter} from "next/navigation";
 import {useCallback, useEffect, useState} from "react";
 import {checkPassword, getQuizById, submitQuiz} from "@/app/api/quiz/examine/examine";
 import {Examine, QuizResult} from "@/app/lib/definitions";
-import {Button, Checkbox, Input, Radio, RadioGroup, Textarea} from "@nextui-org/react";
+import {Button, Checkbox, Input, Radio, RadioGroup} from "@nextui-org/react";
 
 export default function Fill() {
 
@@ -43,39 +43,34 @@ export default function Fill() {
                     className="flex flex-col gap-5"
                 >
                     {
-                        question.questionType === "TEXT" ?
-                            <Textarea
+                        question.questionType === "NUMBER" ?
+                            <Input
+                                type="number"
                                 name={question.id}
                             />
                             :
-                            question.questionType === "NUMBER" ?
-                                <Input
-                                    type="number"
-                                    name={question.id}
-                                />
+                            question.questionType === "MULTIPLE_CHOICE" ?
+                                question.answers.map((answer, aindex) => (
+                                    <Checkbox
+                                        key={aindex}
+                                        name={question.id}
+                                        value={answer.id + ""}
+                                    >
+                                        {answer.answer}
+                                    </Checkbox>
+                                ))
                                 :
-                                question.questionType === "MULTIPLE_CHOICE" ?
-                                    question.answers.map((answer, aindex) => (
-                                        <Checkbox
+                                <RadioGroup name={question.id}>
+                                    {question.answers.map((answer, aindex) => (
+                                        <Radio
                                             key={aindex}
-                                            name={question.id}
                                             value={answer.id + ""}
+
                                         >
                                             {answer.answer}
-                                        </Checkbox>
-                                    ))
-                                    :
-                                    <RadioGroup name={question.id}>
-                                        {question.answers.map((answer, aindex) => (
-                                            <Radio
-                                                key={aindex}
-                                                value={answer.id + ""}
-
-                                            >
-                                                {answer.answer}
-                                            </Radio>
-                                        ))}
-                                    </RadioGroup>
+                                        </Radio>
+                                    ))}
+                                </RadioGroup>
                     }
                 </div>
             </div>

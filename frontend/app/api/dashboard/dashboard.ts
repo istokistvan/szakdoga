@@ -6,6 +6,7 @@ import {AUTHORIZATION} from "@/app/lib/definitions";
 export async function getFilledQuizNumber() {
     return fetch("http://backend:8080/api/dashboard/filled", {
         method: "GET",
+        cache: "no-store",
         headers: {
             'Authorization': `Bearer ${cookies().get(AUTHORIZATION)?.value}`
         }
@@ -19,6 +20,7 @@ export async function getFilledQuizNumber() {
 export async function getCreatedQuizzes() {
     return fetch("http://backend:8080/api/dashboard/quizzes", {
         method: "GET",
+        cache: "no-store",
         headers: {
             'Authorization': `Bearer ${cookies().get(AUTHORIZATION)?.value}`
         }
