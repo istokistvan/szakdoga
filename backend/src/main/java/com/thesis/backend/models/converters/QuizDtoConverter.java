@@ -17,7 +17,7 @@ public class QuizDtoConverter {
     public static QuizEntity convertToEntity(QuizDto dto, UserRepository userRepository) {
         QuizEntity result = new QuizEntity(
                 dto.getName(),
-                dto.getIsVisible(),
+                dto.getVisible(),
                 dto.getPassword(),
                 dto.getDescription(),
                 LocalDateTime.parse(dto.getAvailableFrom(), DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm")),

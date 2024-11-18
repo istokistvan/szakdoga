@@ -16,7 +16,7 @@ import java.util.UUID;
 public interface ExamineRepository extends CrudRepository<QuizEntity, UUID> {
 
     @NonNull
-    @Query("SELECT q FROM QuizEntity q WHERE q.isVisible = true AND q.availableFrom <= :now AND q.availableTo >= :now")
+    @Query("SELECT q FROM QuizEntity q WHERE q.visible = true AND q.availableFrom <= :now AND q.availableTo >= :now")
     List<QuizEntity> getAllPublic(@Param("now") LocalDateTime now);
 
     @Query("SELECT q FROM QuizEntity q WHERE q.id = :id AND q.availableFrom <= :now AND q.availableTo >= :now")

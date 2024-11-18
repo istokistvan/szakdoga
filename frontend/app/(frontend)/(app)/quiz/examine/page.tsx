@@ -14,7 +14,7 @@ export default function Examine() {
     }, []);
 
     const renderQuizzes = useCallback(() => {
-        return state.map((quiz, index) => (
+        return state?.map((quiz, index) => (
             <Card key={index} className="w-fit min-w-[400px] h-fit">
                 <CardHeader
                     className="flex justify-center text-xl font-bold"

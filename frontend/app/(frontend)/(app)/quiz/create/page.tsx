@@ -20,7 +20,7 @@ export default function QuizCreation() {
     const handleSubmit = (formData: FormData) => {
         const quizData: Quiz = {
             name: formData.get('name') as string,
-            isVisible: formData.get('isVisible') === '',
+            visible: formData.get('visible') === '',
             password: formData.get('password') as string,
             description: formData.get('description') as string,
             availableFrom: DateTime.fromISO(formData.get('availableFrom') as string).toFormat('yyyy.MM.dd HH:mm'),
@@ -62,7 +62,7 @@ export default function QuizCreation() {
                             isSelected={isSelected}
                             onValueChange={setIsSelected}
 
-                            name="isVisible"
+                            name="visible"
 
                             color="success"
                             startContent={<RiEyeLine/>}

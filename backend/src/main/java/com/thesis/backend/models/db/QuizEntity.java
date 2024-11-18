@@ -21,7 +21,7 @@ public class QuizEntity {
 
     private String name;
 
-    private boolean isVisible;
+    private boolean visible;
 
     private String password;
 
@@ -40,9 +40,9 @@ public class QuizEntity {
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
     private List<QuestionEntity> questions;
 
-    public QuizEntity(String name, boolean isVisible, String password, String description, LocalDateTime availableFrom, LocalDateTime availableTo) {
+    public QuizEntity(String name, boolean visible, String password, String description, LocalDateTime availableFrom, LocalDateTime availableTo) {
         this.name = name;
-        this.isVisible = isVisible;
+        this.visible = visible;
         this.password = password;
         this.description = description;
         this.createdAt = getCreatedAt();

@@ -19,7 +19,7 @@ public class QuizDto {
     private String name;
 
     @NonNull
-    private Boolean isVisible;
+    private Boolean visible;
 
     private String password;
 
