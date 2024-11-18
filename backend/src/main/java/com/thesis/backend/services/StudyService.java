@@ -23,6 +23,6 @@ public class StudyService {
     }
 
     public StudyDto studyQuiz(UUID id) {
-        return QuizEntityConverter.convertToStudyDto(studyRepository.findQuizById(id).orElseThrow());
+        return QuizEntityConverter.convertToStudyDto(studyRepository.findQuizById(id, LocalDateTime.now()).orElseThrow());
     }
 }

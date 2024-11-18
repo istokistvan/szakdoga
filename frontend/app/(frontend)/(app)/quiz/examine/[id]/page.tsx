@@ -27,6 +27,9 @@ export default function Fill() {
                 }
                 setState(data)
             })
+            .catch(() => {
+                router.push("/quiz/examine")
+            })
     }, []);
 
     const renderQuestions = useCallback(() => {
@@ -81,6 +84,10 @@ export default function Fill() {
 
     const handleSubmit = (formData: FormData) => {
 
+        if (!confirm("Are you sure you want to submit the quiz?")) {
+            return
+        }
+
         const res: QuizResult = {
             quizId: state?.id + "",
             userAnswers: []
@@ -105,6 +112,7 @@ export default function Fill() {
             className="w-full h-full flex flex-col gap-5 justify-center items-center"
             action={handleSubmit}
         >
+            <p>{state?.description}</p>
             {renderQuestions()}
             <Button type="submit">Submit</Button>
         </form>

@@ -78,7 +78,7 @@ export default function QuestionForm(props: { setQuestions: Dispatch<SetStateAct
 
                     onChange={() => setState((prevState) => ({...prevState, isNegated: !prevState.isNegated}))}
                 >
-                    Negated question?
+                    {state.isNegated ? "False" : "True"} is the correct answer!
                 </Switch>}
 
             <AnswerForm type={state.questionType} setItems={setState}/>

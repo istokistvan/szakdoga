@@ -4,7 +4,7 @@ import {AUTHORIZATION, QuizResult} from "@/app/lib/definitions";
 import {cookies} from "next/headers";
 
 export async function getAllQuiz() {
-    return fetch("http://localhost:8080/api/examine/all", {
+    return fetch("http://backend:8080/api/examine/all", {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${cookies().get(AUTHORIZATION)?.value}`
@@ -15,7 +15,7 @@ export async function getAllQuiz() {
 }
 
 export async function getQuizById(id: string) {
-    return fetch(`http://localhost:8080/api/examine/${id}`, {
+    return fetch(`http://backend:8080/api/examine/${id}`, {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${cookies().get(AUTHORIZATION)?.value}`
@@ -26,7 +26,7 @@ export async function getQuizById(id: string) {
 }
 
 export async function checkPassword(id: string, password: string) {
-    return fetch(`http://localhost:8080/api/examine/password/${id}`, {
+    return fetch(`http://backend:8080/api/examine/password/${id}`, {
         method: "POST",
         headers: {
             'Authorization': `Bearer ${cookies().get(AUTHORIZATION)?.value}`
@@ -38,7 +38,7 @@ export async function checkPassword(id: string, password: string) {
 }
 
 export async function submitQuiz(formData: QuizResult) {
-    return fetch("http://localhost:8080/api/result/submit", {
+    return fetch("http://backend:8080/api/result/submit", {
         method: "POST",
         headers: {
             'Authorization': `Bearer ${cookies().get(AUTHORIZATION)?.value}`,

@@ -5,7 +5,7 @@ import {AUTHORIZATION, Quiz} from "@/app/lib/definitions";
 
 export default async function createQuiz(formData: Quiz) {
 
-    return fetch("http://localhost:8080/api/quiz/create", {
+    return fetch("http://backend:8080/api/quiz/create", {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {

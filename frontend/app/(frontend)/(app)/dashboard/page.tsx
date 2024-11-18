@@ -3,7 +3,7 @@
 import {useCallback, useEffect, useState} from "react";
 import {getCreatedQuizzes, getFilledQuizNumber} from "@/app/api/dashboard/dashboard";
 import {Quiz} from "@/app/lib/definitions";
-import {Card, CardBody, CardHeader, Divider} from "@nextui-org/react";
+import {Card, CardBody, CardHeader, Divider, Snippet} from "@nextui-org/react";
 
 export default function DashBoard() {
 
@@ -26,10 +26,14 @@ export default function DashBoard() {
 
                 <Divider/>
 
-                {quiz.description &&
-                    <CardBody>
+                <CardBody>
+                    {quiz.description &&
                         <p>{quiz.description}</p>
-                    </CardBody>}
+                    }
+                    <Snippet symbol="Share Id:" variant="bordered">
+                        {quiz.id}
+                    </Snippet>
+                </CardBody>
             </Card>
         ))
     }, [createdQuizzes])

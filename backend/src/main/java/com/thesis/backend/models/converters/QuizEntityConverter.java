@@ -1,6 +1,7 @@
 package com.thesis.backend.models.converters;
 
 import com.thesis.backend.models.db.QuizEntity;
+import com.thesis.backend.models.dto.DashboardQuizDto;
 import com.thesis.backend.models.dto.QuizDto;
 import com.thesis.backend.models.dto.QuizExamineDto;
 import com.thesis.backend.models.dto.StudyDto;
@@ -47,11 +48,23 @@ public class QuizEntityConverter {
         );
     }
 
+    public static DashboardQuizDto convertToDashboardDto(QuizEntity quiz) {
+        return new DashboardQuizDto(
+                quiz.getId(),
+                quiz.getName(),
+                quiz.getDescription()
+        );
+    }
+
     public static List<StudyDto> convertToStudyDtoList(@NonNull List<QuizEntity> all) {
         return all.stream().map(QuizEntityConverter::convertToStudyDto).toList();
     }
 
     public static List<QuizExamineDto> convertToExamineDtoList(@NonNull List<QuizEntity> all) {
         return all.stream().map(QuizEntityConverter::convertToExamineDto).toList();
+    }
+
+    public static List<DashboardQuizDto> convertToDashboardDtoList(@NonNull List<QuizEntity> all) {
+        return all.stream().map(QuizEntityConverter::convertToDashboardDto).toList();
     }
 }

@@ -9,8 +9,10 @@ export default function LoginPage() {
     const router = useRouter()
 
     const handleSubmit = async (formData: FormData) => {
-        handleLogin(formData).then(() => {
-            router.replace("/dashboard")
+        handleLogin(formData).then((res) => {
+            if (res) {
+                router.replace("/dashboard")
+            }
         })
     }
 

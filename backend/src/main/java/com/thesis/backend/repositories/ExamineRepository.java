@@ -19,5 +19,6 @@ public interface ExamineRepository extends CrudRepository<QuizEntity, UUID> {
     @Query("SELECT q FROM QuizEntity q WHERE q.isVisible = true AND q.availableFrom <= :now AND q.availableTo >= :now")
     List<QuizEntity> getAllPublic(@Param("now") LocalDateTime now);
 
-    Optional<QuizEntity> findQuizById(@NonNull UUID id);
+    @Query("SELECT q FROM QuizEntity q WHERE q.id = :id AND q.availableFrom <= :now AND q.availableTo >= :now")
+    Optional<QuizEntity> findQuizById(@Param("id") UUID id, @Param("now") LocalDateTime now);
 }

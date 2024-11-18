@@ -1,6 +1,6 @@
 package com.thesis.backend.controllers;
 
-import com.thesis.backend.models.dto.QuizDto;
+import com.thesis.backend.models.dto.DashboardQuizDto;
 import com.thesis.backend.services.DashboardService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +29,7 @@ public class DashboardController {
     }
 
     @GetMapping("/quizzes")
-    public ResponseEntity<List<QuizDto>> quizzes() {
+    public ResponseEntity<List<DashboardQuizDto>> quizzes() {
         try {
             return ResponseEntity.ok(dashboardService.getQuizzes());
         } catch (Exception e) {

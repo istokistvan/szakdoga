@@ -1,6 +1,6 @@
 "use client"
 
-import {useParams} from "next/navigation";
+import {useParams, useRouter} from "next/navigation";
 import {useCallback, useEffect, useState} from "react";
 import {Study} from "@/app/lib/definitions";
 import {getQuiz} from "@/app/api/quiz/learn/learn";
@@ -14,13 +14,24 @@ export default function StudyFlipCard() {
     const [quiz, setQuiz] = useState<Study>()
     const [index, setIndex] = useState<number>(0)
 
+    const router = useRouter()
+
     useEffect(() => {
-        getQuiz(id).then((data) => setQuiz(data))
-    }, [id])
+        getQuiz(id)
+            .then((data) => {
+                if (typeof data !== "object") {
+                    router.replace("/quiz/learn")
+                }
+                setQuiz(data)
+            })
+            .catch(() => router.replace("/quiz/learn"))
+    }, [id, router])
 
     const renderFlipCard = useCallback(() => (
         quiz &&
-        <>
+        <div
+            className="flex gap-5 items-center justify-around"
+        >
             <Button
                 disabled={index === 0}
                 onClick={() => setIndex((prevState) => prevState - 1)}
@@ -39,14 +50,14 @@ export default function StudyFlipCard() {
             >
                 <ForwardArrow/>
             </Button>
-        </>
+        </div>
     ), [index, quiz])
 
     return (
         <div
-            className="flex gap-5 items-center justify-around"
+            className="flex flex-col gap-5 items-center justify-around"
         >
-
+            <p>{quiz?.description}</p>
 
             {renderFlipCard()}
 

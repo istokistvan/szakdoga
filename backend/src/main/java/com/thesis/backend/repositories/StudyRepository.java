@@ -1,7 +1,6 @@
 package com.thesis.backend.repositories;
 
 import com.thesis.backend.models.db.QuizEntity;
-import lombok.NonNull;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -15,7 +14,8 @@ import java.util.UUID;
 @Repository
 public interface StudyRepository extends CrudRepository<QuizEntity, UUID> {
 
-    Optional<QuizEntity> findQuizById(@NonNull UUID id);
+    @Query("SELECT q FROM QuizEntity q WHERE q.id = :id AND q.availableFrom <= :now AND q.availableTo >= :now")
+    Optional<QuizEntity> findQuizById(@Param("id") UUID id, @Param("now") LocalDateTime now);
 
     @Query("SELECT q FROM QuizEntity q WHERE q.isVisible = true AND q.availableFrom <= :now AND q.availableTo >= :now")
     List<QuizEntity> findAllAvailable(@Param("now") LocalDateTime now);

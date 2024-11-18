@@ -26,11 +26,11 @@ public class ExamineService {
     }
 
     public QuizExamineDto examineQuiz(UUID id) {
-        return QuizEntityConverter.convertToExamineDto(examineRepository.findQuizById(id).orElseThrow());
+        return QuizEntityConverter.convertToExamineDto(examineRepository.findQuizById(id, LocalDateTime.now()).orElseThrow());
     }
 
     public boolean checkPassword(String password, UUID id) {
-        String encodedPassword = examineRepository.findQuizById(id).orElseThrow().getPassword();
+        String encodedPassword = examineRepository.findQuizById(id, LocalDateTime.now()).orElseThrow().getPassword();
         return passwordEncoder.matches(password, encodedPassword);
     }
 }

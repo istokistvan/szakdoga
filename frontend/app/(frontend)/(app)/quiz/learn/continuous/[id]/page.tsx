@@ -3,7 +3,7 @@
 import {useCallback, useEffect, useState} from "react";
 import {Study} from "@/app/lib/definitions";
 import {getQuiz} from "@/app/api/quiz/learn/learn";
-import {useParams} from "next/navigation";
+import {useParams, useRouter} from "next/navigation";
 
 export default function StudyContinuous() {
 
@@ -11,14 +11,19 @@ export default function StudyContinuous() {
 
     const [state, setState] = useState<Study>()
 
-    useEffect(() => {
-        getQuiz(id)
-            .then(data => setState(data))
-    }, [id])
+    const router = useRouter()
 
     useEffect(() => {
-        console.log(state)
-    }, [state]);
+        getQuiz(id)
+            .then(data => {
+                    if (typeof data !== "object") {
+                        router.replace("/quiz/learn")
+                    }
+                    setState(data)
+                }
+            )
+            .catch(() => router.replace("/quiz/learn"))
+    }, [id, router])
 
     const renderQuestions = useCallback(() => {
         return state?.questions.map((question, index) => (
@@ -45,6 +50,7 @@ export default function StudyContinuous() {
         <div
             className="w-full h-fit flex flex-col gap-5 items-center justify-center"
         >
+            <p>{state?.description}</p>
             {renderQuestions()}
         </div>
     )

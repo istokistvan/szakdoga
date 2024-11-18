@@ -16,7 +16,7 @@ export class SecurityFilter {
     }
 
     async auth() {
-        const res = await fetch("http://localhost:8080/api/auth/validate", {
+        const res = await fetch("http://backend:8080/api/auth/validate", {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${this.authorization}`

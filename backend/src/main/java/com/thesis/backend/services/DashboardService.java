@@ -3,7 +3,7 @@ package com.thesis.backend.services;
 import com.thesis.backend.models.converters.QuizEntityConverter;
 import com.thesis.backend.models.db.QuizResultEntity;
 import com.thesis.backend.models.db.UserEntity;
-import com.thesis.backend.models.dto.QuizDto;
+import com.thesis.backend.models.dto.DashboardQuizDto;
 import com.thesis.backend.repositories.DashboardRepository;
 import com.thesis.backend.repositories.QuizRepository;
 import com.thesis.backend.repositories.UserRepository;
@@ -40,13 +40,13 @@ public class DashboardService {
         return res.size();
     }
 
-    public List<QuizDto> getQuizzes() {
+    public List<DashboardQuizDto> getQuizzes() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Optional<UserEntity> user = userRepository.findByUsername(userDetails.getUsername());
         if (user.isEmpty()) {
             throw new UsernameNotFoundException("User not found");
         }
 
-        return QuizEntityConverter.convertToDtoList(quizRepository.findAllByAuthor(user.get()));
+        return QuizEntityConverter.convertToDashboardDtoList(quizRepository.findAllByAuthor(user.get()));
     }
 }

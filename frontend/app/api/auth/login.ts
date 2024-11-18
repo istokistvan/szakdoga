@@ -4,7 +4,7 @@ import {cookies} from "next/headers";
 import {AUTHORIZATION} from "@/app/lib/definitions";
 
 export async function handleLogin(formData: FormData) {
-    return fetch("http://localhost:8080/api/auth/login", {
+    return fetch("http://backend:8080/api/auth/login", {
         method: "POST",
         body: formData,
     })
@@ -15,6 +15,7 @@ export async function handleLogin(formData: FormData) {
         }).then(data => {
             if (data) {
                 cookies().set(AUTHORIZATION, data)
+                return true
             }
         })
         .catch(err => console.error(err))
