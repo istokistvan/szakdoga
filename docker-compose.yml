@@ -19,6 +19,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     environment:
+      - TZ=Europe/Budapest
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/db
     depends_on:
       - db
@@ -33,6 +34,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - NEXT_PUBLIC_API_URL=http://backend:8080
+      - TZ=Europe/Budapest
     depends_on:
       - backend
     ports:
