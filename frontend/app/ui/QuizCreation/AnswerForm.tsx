@@ -113,7 +113,7 @@ export default function AnswerForm(props: {
                                     name="isCorrect"
                                     defaultChecked
                                     onChange={
-                                        (e) => {
+                                        () => {
                                             setState(
                                                 (prevState) => {
                                                     prevState.forEach((item) => item.isCorrect = false);

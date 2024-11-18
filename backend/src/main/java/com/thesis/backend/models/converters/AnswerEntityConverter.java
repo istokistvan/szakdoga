@@ -5,11 +5,13 @@ import com.thesis.backend.models.dto.AnswerDto;
 import com.thesis.backend.models.dto.AnswerExamineDto;
 import lombok.NonNull;
 
+import java.util.Collections;
 import java.util.List;
 
 public class AnswerEntityConverter {
 
     public static List<AnswerDto> convertToDtoList(List<AnswerEntity> answers) {
+        Collections.shuffle(answers);
         return answers.stream()
                 .map(answer -> new AnswerDto(
                         answer.getAnswer(),
@@ -27,6 +29,7 @@ public class AnswerEntityConverter {
     }
 
     public static List<AnswerExamineDto> convertToExamineDtoList(@NonNull List<AnswerEntity> all) {
+        Collections.shuffle(all);
         return all.stream().map(AnswerEntityConverter::convertToExamineDto).toList();
     }
 }

@@ -30,7 +30,7 @@ export default function Fill() {
             .catch(() => {
                 router.push("/quiz/examine")
             })
-    }, []);
+    }, [id, router]);
 
     const renderQuestions = useCallback(() => {
         return state?.questions.map((question, qindex) => (
