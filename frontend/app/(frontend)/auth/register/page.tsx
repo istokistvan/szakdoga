@@ -9,8 +9,10 @@ export default function RegisterPage() {
     const router = useRouter()
 
     const handleSubmit = async (formData: FormData) => {
-        handleRegister(formData).then(() => {
-            router.replace("/auth/login")
+        handleRegister(formData).then((res) => {
+            if (res) {
+                router.replace("/auth/login")
+            }
         })
     }
 

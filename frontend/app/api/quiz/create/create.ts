@@ -13,6 +13,6 @@ export default async function createQuiz(formData: Quiz) {
             'Content-Type': 'application/json'
         }
     })
-        .then(response => response.text())
+        .then(response => response.status < 400)
         .catch((error) => console.error('Error:', error))
 }

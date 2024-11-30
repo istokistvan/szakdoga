@@ -31,7 +31,7 @@ export default function QuizCreation() {
         }
 
         createQuiz(quizData)
-            .then(() => router.replace('/dashboard'))
+            .then((res) => res && router.replace('/dashboard'))
     }
 
     useEffect(() => {
@@ -110,7 +110,7 @@ export default function QuizCreation() {
                             />
                         </div>
                     }
-                    
+
                     <Button
                         type="submit"
                         color="success"
