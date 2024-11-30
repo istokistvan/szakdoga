@@ -62,9 +62,6 @@ public class QuizResultService {
                         ));
 
                         break;
-                    case TEXT:
-                        //TODO: Implement text comparison
-                        break;
                     case MULTIPLE_CHOICE:
                         float oneCorrect = (float) (question.get().getPoints() * 1.0 / question.get().getAnswers().stream().filter(AnswerEntity::isCorrect).count());
                         userAnswer = answerRepository.findById(UUID.fromString(dto.getAnswer()));

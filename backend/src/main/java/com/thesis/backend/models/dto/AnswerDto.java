@@ -2,9 +2,11 @@ package com.thesis.backend.models.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
 @Data
+@EqualsAndHashCode
 public class AnswerDto {
 
     @NonNull

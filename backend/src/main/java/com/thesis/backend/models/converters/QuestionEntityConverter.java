@@ -9,15 +9,17 @@ import java.util.List;
 
 public class QuestionEntityConverter {
 
+    public static QuestionDto convertToDto(QuestionEntity question) {
+        return new QuestionDto(
+                question.getQuestion(),
+                question.getQuestionType(),
+                question.getPoints(),
+                AnswerEntityConverter.convertToDtoList(question.getAnswers())
+        );
+    }
+
     public static List<QuestionDto> convertToDtoList(List<QuestionEntity> questions) {
-        return questions.stream()
-                .map(question -> new QuestionDto(
-                        question.getQuestion(),
-                        question.getQuestionType(),
-                        question.getPoints(),
-                        AnswerEntityConverter.convertToDtoList(question.getAnswers())
-                ))
-                .toList();
+        return questions.stream().map(QuestionEntityConverter::convertToDto).toList();
     }
 
     public static QuestionExamineDto convertToExamineDto(QuestionEntity question) {

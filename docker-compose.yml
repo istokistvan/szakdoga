@@ -12,33 +12,44 @@ services:
     volumes:
       - db_data:/var/lib/mysql
 
+  test_db:
+      image: mysql:latest
+      container_name: test_db
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: db
+      ports:
+        - "3307:3306"
+      volumes:
+        - db_data:/var/lib/test_mysql
+
   backend:
-    image: backend-image
-    container_name: backend-service
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    environment:
-      - TZ=Europe/Budapest
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/db
-    depends_on:
-      - db
-    ports:
-      - "8080:8080"
+      image: backend-image
+      container_name: backend-service
+      build:
+        context: ./backend
+        dockerfile: Dockerfile
+      environment:
+        - TZ=Europe/Budapest
+        - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/db
+      depends_on:
+        - db
+      ports:
+        - "8080:8080"
 
   frontend:
-    image: frontend-image
-    container_name: frontend-service
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    environment:
-      - NEXT_PUBLIC_API_URL=http://backend:8080
-      - TZ=Europe/Budapest
-    depends_on:
-      - backend
-    ports:
-      - "3000:3000"
+      image: frontend-image
+      container_name: frontend-service
+      build:
+        context: ./frontend
+        dockerfile: Dockerfile
+      environment:
+        - NEXT_PUBLIC_API_URL=http://backend:8080
+        - TZ=Europe/Budapest
+      depends_on:
+        - backend
+      ports:
+        - "3000:3000"
 
 volumes:
   db_data:

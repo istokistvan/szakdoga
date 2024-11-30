@@ -3,11 +3,13 @@ package com.thesis.backend.models.dto;
 import com.thesis.backend.models.QuestionType;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
 import java.util.List;
 
 @Data
+@EqualsAndHashCode
 public class QuestionDto {
 
     @NonNull

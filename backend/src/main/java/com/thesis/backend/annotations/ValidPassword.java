@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @NotBlank(message = "Password is required")
-@Size(min = 6, message = "Password should have at least 6 characters")
+@Size(min = 8, message = "Password should have at least 8 characters")
 @Pattern(regexp = "^(?=.*[0-9])(?=.*[!@#$%^&*_+\\-\\\\()\\[\\]/'\",.:?=])[a-zA-Z0-9!@#$%^&*_+\\-\\\\()\\[\\]/'\",.:?=]{8,16}$",
         message = "Password must contain at least one digit, one lowercase letter, one uppercase letter, and one special character")
 public @interface ValidPassword {
