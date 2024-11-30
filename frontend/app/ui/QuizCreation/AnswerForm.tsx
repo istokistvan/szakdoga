@@ -10,21 +10,26 @@ export default function AnswerForm(props: {
 }) {
 
     const [state, setState] = useState<Answer[]>([])
+    const [isDisabled, setIsDisabled] = useState(true)
 
     useEffect(() => {
         if (props.type === 'ONE_CHOICE' || props.type === 'MULTIPLE_CHOICE') {
             setState([
                 {answer: "", isCorrect: true, errorTolerance: 0},
                 {answer: "", isCorrect: false, errorTolerance: 0},
-            ]);
+            ])
         } else {
-            setState([{answer: "", isCorrect: true, errorTolerance: 0}]);
+            setState([{answer: "", isCorrect: true, errorTolerance: 0}])
         }
     }, [props.type]);
 
     const handleSaveAnswer = () => {
-        props.setItems((prevState) => ({...prevState, answers: state}));
+        props.setItems((prevState) => ({...prevState, answers: state}))
     }
+
+    useEffect(() => {
+        setIsDisabled(state.some((item) => item.answer === ""))
+    }, [state])
 
     const renderInputs = () => {
         switch (props.type) {
@@ -73,6 +78,7 @@ export default function AnswerForm(props: {
                             </div>
                         ))}
                         <Button
+                            color="primary"
                             onClick={() => setState(
                                 (prevState) => [
                                     ...prevState,
@@ -129,6 +135,7 @@ export default function AnswerForm(props: {
                             </div>
                         ))}
                         <Button
+                            color="primary"
                             onClick={() => setState(
                                 (prevState) => [
                                     ...prevState,
@@ -178,7 +185,13 @@ export default function AnswerForm(props: {
     return (
         <>
             {renderInputs()}
-            <Button onClick={handleSaveAnswer}>Save answers</Button>
+            <Button
+                onClick={handleSaveAnswer}
+                color={"warning"}
+                disabled={isDisabled}
+            >
+                Save answers
+            </Button>
         </>
     )
 }

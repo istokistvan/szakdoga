@@ -110,7 +110,14 @@ export default function QuizCreation() {
                             />
                         </div>
                     }
-                    <Button type="submit" color="success">Create quiz</Button>
+                    
+                    <Button
+                        type="submit"
+                        color="success"
+                        disabled={state.length === 0}
+                    >
+                        Create quiz
+                    </Button>
                 </div>
 
                 <div className="w-full h-full flex flex-col gap-5 px-3 mb-6">

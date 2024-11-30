@@ -82,7 +82,13 @@ export default function QuestionForm(props: { setQuestions: Dispatch<SetStateAct
                 </Switch>}
 
             <AnswerForm type={state.questionType} setItems={setState}/>
-            <Button onClick={handleSaveQuestion}>Save question</Button>
+            <Button
+                onClick={handleSaveQuestion}
+                disabled={state.question.length === 0 || (state.questionType !== "TRUE_FALSE" && state.answers.length === 0)}
+                color={"danger"}
+            >
+                Save question
+            </Button>
         </div>
     )
 }
